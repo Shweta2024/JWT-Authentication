@@ -1,7 +1,10 @@
 JWT -> used for ```Authorization``` (It authorizes that this particaular user has access to this particular system)
+
 Authorization: ensuring that the user making request to the server is the same user who has been logged in during the authentication process.
 
 authentication -> like sigin/signup, to identify user; ```who is the user?```
+
+
 authorization -> to grant access; ```what all the user can do?```
 
 <br>
