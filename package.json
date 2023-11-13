@@ -1,0 +1,25 @@
+{
+  "name": "jwt-authentication",
+  "version": "1.0.0",
+  "description": "JWT -> used for ```Authorization``` (It authorizes that this particaular user has access to this particular system)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shweta2024/JWT-Authentication.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shweta2024/JWT-Authentication/issues"
+  },
+  "homepage": "https://github.com/Shweta2024/JWT-Authentication#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
