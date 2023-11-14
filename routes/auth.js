@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const User = require('../model/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 async function userExist(userEmail) {
     const user = await User.findOne({ email: userEmail })
@@ -9,7 +10,7 @@ async function userExist(userEmail) {
 
 router.post('/register', async (req, res) => {
     try {
-        const isUserPresent = userExist(req.body.email)
+        const isUserPresent = await userExist(req.body.email)
 
         //check if user already exists
         if (isUserPresent)
@@ -43,12 +44,21 @@ router.post('/login', async (req, res) => {
             return res.status(404).send('message: User not found!')
 
         //if user exists checks if password is correct
-        const verifyUser = await bcrypt.compare(req.body.password,user.password)
+        const verifyUser = await bcrypt.compare(req.body.password, user.password) // returns true or false
         
-        if (verifyUser)
+        if (verifyUser) {
+            // once user has successfully logged in, then generate token for him
+            // and add that token to the header of the response
+            const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+            res.header('auth-token',token) // auth-token -> its just a name to identify the token; we can name it anything
+            
+            console.log(token)
             return res.status(200).send('Logged in successfully!')
-        else
+        }
+        else {
             return res.status(400).send('message: Incorrect password!')
+    
+        }
     }
     catch (error) {
         res.status(400).send(error)
