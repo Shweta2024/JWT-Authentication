@@ -14,7 +14,7 @@ function verifyToken(req, res, next) {
         next()
     }
     catch (error) {
-        return res.status(400).send('Invalid Token!')
+        res.status(400).send('Invalid Token!')
     }
 }
 

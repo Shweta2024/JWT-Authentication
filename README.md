@@ -73,3 +73,108 @@ Left-Hand Side:-
 - The first part is the header converted into ```base64encoded```.
 - The second part is the user converted into ```base64encoded```.
 - And the third part is, part1 + "." + part2, then we apply the algorithm using ``secret key`` to get the last part.
+
+
+<br>
+
+<h3> Operations:- </h3>
+
+
+```jwt.sign({_id: user._id}, secret)``` 
+
+- we can have anything in the first field(name,email,id), whichever we prefer for creating the token. 
+
+- ```secret``` -> it is a string which is stored at the server side and is used for generating the token.
+
+- it returns a ```token``` as result.
+
+sample:-
+
+
+![Alt text](images/image-10.png)
+
+
+```jwt.verify(token,secret)```
+
+- first field is the token and second is the secret key.
+
+- the above returns an object as result which contains the field used for creating the token & iat.
+
+sample:-
+
+
+![Alt text](images/image-14.png)
+
+
+<br>
+
+<h2>Logic:-</h2>
+
+- register user and store its info in db.(only if current user doesn't exist in db)
+
+- once a user login successfully, create a token and set the token in the header of the response.
+
+- now whenever user makes request to a private route check if the token in header is valid or not, if valid give access to current route.
+
+<br>
+
+
+<h2> Results:-</h2>
+
+<br>
+
+
+1. POST request to ```/api/user/register```
+
+- when user already exists
+
+![Alt text](images/image-5.png)
+
+- creates new user if no user with that email found
+
+![Alt text](images/image-6.png)
+
+
+<br>
+
+
+2. POST request to ```/api/user/login```
+
+- when no user with that email exists
+
+![Alt text](images/image-7.png)
+
+- when incorrect password entered
+
+![Alt text](images/image-8.png)
+
+- successfull login
+
+![Alt text](images/image-9.png)
+
+NOTE:- below is the token generated on successfull login
+
+![Alt text](images/image-10.png)
+
+
+<br>
+
+3. GET request to ```/home``` (private route)
+
+- when no token is present in the header
+
+![Alt text](images/image-11.png)
+
+- when used an invalid token
+
+![Alt text](images/image-12.png)
+
+- when used a valid token
+
+![Alt text](images/image-13.png)
+
+when we use ```jwt.verfy(token,secret)``` -> we get output as an object that contains the feild which we used for creating the token and iat(issued at time); image of which is below:- 
+
+![Alt text](images/image-14.png)
+
+
